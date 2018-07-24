@@ -45,8 +45,6 @@
 // $Id: mysqli.php 327310 2012-08-27 15:16:18Z danielc $
 //
 
-require_once 'MDB2/Driver/Manager/Common.php';
-
 /**
  * MDB2 MySQLi driver for the management modules
  *
