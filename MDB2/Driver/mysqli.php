@@ -1109,7 +1109,7 @@ class MDB2_Driver_mysqli extends MDB2_Driver_Common
                 $placeholder_type_guess = $query[$p_position];
             }
 
-            $new_pos = $this->_skipDelimitedStrings($query, $position, $p_position);
+            $new_pos = $this->skipDelimitedStrings($query, $position, $p_position);
             if (MDB2::isError($new_pos)) {
                 return $new_pos;
             }
