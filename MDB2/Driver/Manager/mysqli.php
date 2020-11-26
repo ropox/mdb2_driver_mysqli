@@ -67,7 +67,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
      * @return mixed MDB2_OK on success, a MDB2 error on failure
      * @access public
      */
-    function createDatabase($name, $options = array())
+    public function createDatabase($name, $options = array())
     {
         $db = $this->getDBInstance();
         if (MDB2::isError($db)) {
@@ -97,7 +97,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
      * @return mixed MDB2_OK on success, a MDB2 error on failure
      * @access public
      */
-    function alterDatabase($name, $options = array())
+    public function alterDatabase($name, $options = array())
     {
         $db = $this->getDBInstance();
         if (MDB2::isError($db)) {
@@ -124,7 +124,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
      * @return mixed MDB2_OK on success, a MDB2 error on failure
      * @access public
      */
-    function dropDatabase($name)
+    public function dropDatabase($name)
     {
         $db = $this->getDBInstance();
         if (MDB2::isError($db)) {
@@ -137,7 +137,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
     }
 
     // }}}
-    // {{{ _getAdvancedFKOptions()
+    // {{{ getAdvancedFKOptions()
 
     /**
      * Return the FOREIGN KEY query section dealing with non-standard options
@@ -147,7 +147,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
      * @return string
      * @access protected
      */
-    function _getAdvancedFKOptions($definition)
+    protected function getAdvancedFKOptions($definition)
     {
         $query = '';
         if (!empty($definition['match'])) {
@@ -200,7 +200,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
      * @return mixed MDB2_OK on success, a MDB2 error on failure
      * @access public
      */
-    function createTable($name, $fields, $options = array())
+    public function createTable($name, $fields, $options = array())
     {
         $db = $this->getDBInstance();
         if (MDB2::isError($db)) {
@@ -281,7 +281,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
      * @return mixed MDB2_OK on success, a MDB2 error on failure
      * @access public
      */
-    function dropTable($name)
+    public function dropTable($name)
     {
         $db = $this->getDBInstance();
         if (MDB2::isError($db)) {
@@ -295,7 +295,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
             foreach ($constraints as $constraint) {
                 $definition = $db->reverse->getTableConstraintDefinition($name, $constraint);
                 if (!MDB2::isError($definition) && !empty($definition['foreign'])) {
-                    $result = $this->_dropFKTriggers($name, $constraint, $definition['references']['table']);
+                    $result = $this->dropFKTriggers($name, $constraint, $definition['references']['table']);
                     if (MDB2::isError($result)) {
                         return $result;
                     }
@@ -317,7 +317,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
      * @return mixed MDB2_OK on success, a MDB2 error on failure
      * @access public
      */
-    function truncateTable($name)
+    public function truncateTable($name)
     {
         $db = $this->getDBInstance();
         if (MDB2::isError($db)) {
@@ -349,7 +349,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
      * @return mixed MDB2_OK success, a MDB2 error on failure
      * @access public
      */
-    function vacuum($table = null, $options = array())
+    public function vacuum($table = null, $options = array())
     {
         $db = $this->getDBInstance();
         if (MDB2::isError($db)) {
@@ -477,7 +477,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
      *
       * @return mixed MDB2_OK on success, a MDB2 error on failure
      */
-    function alterTable($name, $changes, $check)
+    public function alterTable($name, $changes, $check)
     {
         $db = $this->getDBInstance();
         if (MDB2::isError($db)) {
@@ -582,7 +582,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
      * @return mixed array of database names on success, a MDB2 error on failure
      * @access public
      */
-    function listDatabases()
+    public function listDatabases()
     {
         $db = $this->getDBInstance();
         if (MDB2::isError($db)) {
@@ -608,7 +608,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
      * @return mixed array of user names on success, a MDB2 error on failure
      * @access public
      */
-    function listUsers()
+    public function listUsers()
     {
         $db = $this->getDBInstance();
         if (MDB2::isError($db)) {
@@ -627,7 +627,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
      * @return mixed array of function names on success, a MDB2 error on failure
      * @access public
      */
-    function listFunctions()
+    public function listFunctions()
     {
         $db = $this->getDBInstance();
         if (MDB2::isError($db)) {
@@ -660,7 +660,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
      * @return mixed array of trigger names on success, a MDB2 error on failure
      * @access public
      */
-    function listTableTriggers($table = null)
+    public function listTableTriggers($table = null)
     {
         $db = $this->getDBInstance();
         if (MDB2::isError($db)) {
@@ -692,7 +692,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
      * @return mixed array of table names on success, a MDB2 error on failure
      * @access public
      */
-    function listTables($database = null)
+    public function listTables($database = null)
     {
         $db = $this->getDBInstance();
         if (MDB2::isError($db)) {
@@ -732,7 +732,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
      * @return mixed array of view names on success, a MDB2 error on failure
      * @access public
      */
-    function listViews($database = null)
+    public function listViews($database = null)
     {
         $db = $this->getDBInstance();
         if (MDB2::isError($db)) {
@@ -766,7 +766,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
      * @return mixed array of field names on success, a MDB2 error on failure
      * @access public
      */
-    function listTableFields($table)
+    public function listTableFields($table)
     {
         $db = $this->getDBInstance();
         if (MDB2::isError($db)) {
@@ -822,7 +822,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
      * @return mixed MDB2_OK on success, a MDB2 error on failure
      * @access public
      */
-    function createIndex($table, $name, $definition)
+    public function createIndex($table, $name, $definition)
     {
         $db = $this->getDBInstance();
         if (MDB2::isError($db)) {
@@ -859,7 +859,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
      * @return mixed MDB2_OK on success, a MDB2 error on failure
      * @access public
      */
-    function dropIndex($table, $name)
+    public function dropIndex($table, $name)
     {
         $db = $this->getDBInstance();
         if (MDB2::isError($db)) {
@@ -885,7 +885,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
      * @return mixed array of index names on success, a MDB2 error on failure
      * @access public
      */
-    function listTableIndexes($table)
+    public function listTableIndexes($table)
     {
         $db = $this->getDBInstance();
         if (MDB2::isError($db)) {
@@ -949,7 +949,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
      * @return mixed MDB2_OK on success, a MDB2 error on failure
      * @access public
      */
-    function createConstraint($table, $name, $definition)
+    public function createConstraint($table, $name, $definition)
     {
         $db = $this->getDBInstance();
         if (MDB2::isError($db)) {
@@ -992,7 +992,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
                 $referenced_fields[] = $db->quoteIdentifier($field, true);
             }
             $query .= ' ('. implode(', ', $referenced_fields) . ')';
-            $query .= $this->_getAdvancedFKOptions($definition);
+            $query .= $this->getAdvancedFKOptions($definition);
 
             // add index on FK column(s) or we can't add a FK constraint
             // @see http://forums.mysql.com/read.php?22,19755,226009
@@ -1006,7 +1006,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
             return $res;
         }
         if (!empty($definition['foreign'])) {
-            return $this->_createFKTriggers($table, array($name => $definition));
+            return $this->createFKTriggers($table, array($name => $definition));
         }
         return MDB2_OK;
     }
@@ -1023,7 +1023,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
      * @return mixed MDB2_OK on success, a MDB2 error on failure
      * @access public
      */
-    function dropConstraint($table, $name, $primary = false)
+    public function dropConstraint($table, $name, $primary = false)
     {
         $db = $this->getDBInstance();
         if (MDB2::isError($db)) {
@@ -1044,7 +1044,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
         $definition = $db->reverse->getTableConstraintDefinition($table, $name);
         if (!MDB2::isError($definition) && !empty($definition['foreign'])) {
             //first drop the FK enforcing triggers
-            $result = $this->_dropFKTriggers($table, $name, $definition['references']['table']);
+            $result = $this->dropFKTriggers($table, $name, $definition['references']['table']);
             if (MDB2::isError($result)) {
                 return $result;
             }
@@ -1070,7 +1070,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
     }
 
     // }}}
-    // {{{ _createFKTriggers()
+    // {{{ createFKTriggers()
 
     /**
      * Create triggers to enforce the FOREIGN KEY constraint on the table
@@ -1085,7 +1085,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
      * @return mixed MDB2_OK on success, a MDB2 error on failure
      * @access private
      */
-    function _createFKTriggers($table, $foreign_keys)
+    public function createFKTriggers($table, $foreign_keys)
     {
         $db = $this->getDBInstance();
         if (MDB2::isError($db)) {
@@ -1217,7 +1217,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
     }
 
     // }}}
-    // {{{ _dropFKTriggers()
+    // {{{ dropFKTriggers()
 
     /**
      * Drop the triggers created to enforce the FOREIGN KEY constraint on the table
@@ -1229,7 +1229,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
      * @return mixed MDB2_OK on success, a MDB2 error on failure
      * @access private
      */
-    function _dropFKTriggers($table, $fkname, $referenced_table)
+    public function dropFKTriggers($table, $fkname, $referenced_table)
     {
         $db = $this->getDBInstance();
         if (MDB2::isError($db)) {
@@ -1263,7 +1263,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
      * @return mixed array of constraint names on success, a MDB2 error on failure
      * @access public
      */
-    function listTableConstraints($table)
+    public function listTableConstraints($table)
     {
         $db = $this->getDBInstance();
         if (MDB2::isError($db)) {
@@ -1338,7 +1338,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
      * @return mixed MDB2_OK on success, a MDB2 error on failure
      * @access public
      */
-    function createSequence($seq_name, $start = 1, $options = array())
+    public function createSequence($seq_name, $start = 1, $options = array())
     {
         $db = $this->getDBInstance();
         if (MDB2::isError($db)) {
@@ -1411,7 +1411,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
      * @return mixed MDB2_OK on success, a MDB2 error on failure
      * @access public
      */
-    function dropSequence($seq_name)
+    public function dropSequence($seq_name)
     {
         $db = $this->getDBInstance();
         if (MDB2::isError($db)) {
@@ -1436,7 +1436,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
      * @return mixed array of sequence names on success, a MDB2 error on failure
      * @access public
      */
-    function listSequences($database = null)
+    public function listSequences($database = null)
     {
         $db = $this->getDBInstance();
         if (MDB2::isError($db)) {

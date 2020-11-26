@@ -55,7 +55,7 @@
  */
 class MDB2_Driver_Datatype_mysqli extends MDB2_Driver_Datatype_Common
 {
-    // {{{ _getCharsetFieldDeclaration()
+    // {{{ getCharsetFieldDeclaration()
 
     /**
      * Obtain DBMS specific SQL code portion needed to set the CHARACTER SET
@@ -65,13 +65,13 @@ class MDB2_Driver_Datatype_mysqli extends MDB2_Driver_Datatype_Common
      * @return string  DBMS specific SQL code portion needed to set the CHARACTER SET
      *                 of a field declaration.
      */
-    function _getCharsetFieldDeclaration($charset)
+    protected  function getCharsetFieldDeclaration($charset)
     {
         return 'CHARACTER SET '.$charset;
     }
 
     // }}}
-    // {{{ _getCollationFieldDeclaration()
+    // {{{ getCollationFieldDeclaration()
 
     /**
      * Obtain DBMS specific SQL code portion needed to set the COLLATION
@@ -81,13 +81,13 @@ class MDB2_Driver_Datatype_mysqli extends MDB2_Driver_Datatype_Common
      * @return string  DBMS specific SQL code portion needed to set the COLLATION
      *                 of a field declaration.
      */
-    function _getCollationFieldDeclaration($collation)
+    protected  function getCollationFieldDeclaration($collation)
     {
         return 'COLLATE '.$collation;
     }
 
     // }}}
-    // {{{ getDeclaration()
+    // {{{ getCollationFieldDeclaration()
 
     /**
      * Obtain DBMS specific SQL code portion needed to declare
@@ -101,7 +101,7 @@ class MDB2_Driver_Datatype_mysqli extends MDB2_Driver_Datatype_Common
      *                declare the specified field.
      * @access public
      */
-    function getDeclaration($type, $name, $field)
+    public  function getDeclaration($type, $name, $field)
     {
         // MySQL DDL syntax forbids combining NOT NULL with DEFAULT NULL.
         // To get a default of NULL for NOT NULL columns, omit it.
@@ -141,7 +141,7 @@ class MDB2_Driver_Datatype_mysqli extends MDB2_Driver_Datatype_Common
      *      declare the specified field.
      * @access public
      */
-    function getTypeDeclaration($field)
+    public function getTypeDeclaration($field)
     {
         $db = $this->getDBInstance();
         if (MDB2::isError($db)) {
@@ -224,7 +224,7 @@ class MDB2_Driver_Datatype_mysqli extends MDB2_Driver_Datatype_Common
     }
 
     // }}}
-    // {{{ _getIntegerDeclaration()
+    // {{{ getIntegerDeclaration()
 
     /**
      * Obtain DBMS specific SQL code portion needed to declare an integer type
@@ -252,7 +252,7 @@ class MDB2_Driver_Datatype_mysqli extends MDB2_Driver_Datatype_Common
      *                 declare the specified field.
      * @access protected
      */
-    function _getIntegerDeclaration($name, $field)
+    protected function getIntegerDeclaration($name, $field)
     {
         $db = $this->getDBInstance();
         if (MDB2::isError($db)) {
@@ -279,7 +279,7 @@ class MDB2_Driver_Datatype_mysqli extends MDB2_Driver_Datatype_Common
     }
 
     // }}}
-    // {{{ _getFloatDeclaration()
+    // {{{ getFloatDeclaration()
 
     /**
      * Obtain DBMS specific SQL code portion needed to declare an float type
@@ -307,16 +307,16 @@ class MDB2_Driver_Datatype_mysqli extends MDB2_Driver_Datatype_Common
      *                 declare the specified field.
      * @access protected
      */
-    function _getFloatDeclaration($name, $field)
+    protected function getFloatDeclaration($name, $field)
     {
         // Since AUTO_INCREMENT can be used for integer or floating-point types,
         // reuse the INTEGER declaration
         // @see http://bugs.mysql.com/bug.php?id=31032
-        return $this->_getIntegerDeclaration($name, $field);
+        return $this->getIntegerDeclaration($name, $field);
     }
 
     // }}}
-    // {{{ _getDecimalDeclaration()
+    // {{{ getDecimalDeclaration()
 
     /**
      * Obtain DBMS specific SQL code portion needed to declare an decimal type
@@ -344,7 +344,7 @@ class MDB2_Driver_Datatype_mysqli extends MDB2_Driver_Datatype_Common
      *                 declare the specified field.
      * @access protected
      */
-    function _getDecimalDeclaration($name, $field)
+    protected function getDecimalDeclaration($name, $field)
     {
         $db = $this->getDBInstance();
         if (MDB2::isError($db)) {
@@ -382,7 +382,7 @@ class MDB2_Driver_Datatype_mysqli extends MDB2_Driver_Datatype_Common
      *
      * @return string SQL pattern
      */
-    function matchPattern($pattern, $operator = null, $field = null)
+    public function matchPattern($pattern, $operator = null, $field = null)
     {
         $db = $this->getDBInstance();
         if (MDB2::isError($db)) {
@@ -427,7 +427,7 @@ class MDB2_Driver_Datatype_mysqli extends MDB2_Driver_Datatype_Common
     }
 
     // }}}
-    // {{{ _mapNativeDatatype()
+    // {{{ mapNativeDatatype()
 
     /**
      * Maps a native array description of a field to a MDB2 datatype and length
@@ -436,7 +436,7 @@ class MDB2_Driver_Datatype_mysqli extends MDB2_Driver_Datatype_Common
      * @return array containing the various possible types, length, sign, fixed
      * @access public
      */
-    function _mapNativeDatatype($field)
+    public function mapNativeDatatype($field)
     {
         $db_type = strtolower($field['type']);
         $db_type = strtok($db_type, '(), ');
@@ -604,7 +604,7 @@ class MDB2_Driver_Datatype_mysqli extends MDB2_Driver_Datatype_Common
      * @return string
      * @access public
      */
-    function mapPrepareDatatype($type)
+    public  function mapPrepareDatatype($type)
     {
         $db = $this->getDBInstance();
         if (MDB2::isError($db)) {
@@ -632,7 +632,7 @@ class MDB2_Driver_Datatype_mysqli extends MDB2_Driver_Datatype_Common
         }
         return 's';
     }
-    
+
     // }}}
 }
 ?>

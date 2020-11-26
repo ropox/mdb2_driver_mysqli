@@ -60,7 +60,7 @@ class MDB2_Driver_Reverse_mysqli extends MDB2_Driver_Reverse_Common
      * @var    array
      * @access public
      */
-    var $flags = array(
+    public  $flags = array(
         MYSQLI_NOT_NULL_FLAG        => 'not_null',
         MYSQLI_PRI_KEY_FLAG         => 'primary_key',
         MYSQLI_UNIQUE_KEY_FLAG      => 'unique_key',
@@ -81,7 +81,7 @@ class MDB2_Driver_Reverse_mysqli extends MDB2_Driver_Reverse_Common
      * @var    array
      * @access public
      */
-    var $types = array(
+    public $types = array(
         MYSQLI_TYPE_DECIMAL     => 'decimal',
         246                     => 'decimal',
         MYSQLI_TYPE_TINY        => 'tinyint',
@@ -119,7 +119,7 @@ class MDB2_Driver_Reverse_mysqli extends MDB2_Driver_Reverse_Common
      * @return mixed data array on success, a MDB2 error on failure
      * @access public
      */
-    function getTableFieldDefinition($table_name, $field_name)
+    public function getTableFieldDefinition($table_name, $field_name)
     {
         $db = $this->getDBInstance();
         if (MDB2::isError($db)) {
@@ -235,7 +235,7 @@ class MDB2_Driver_Reverse_mysqli extends MDB2_Driver_Reverse_Common
      * @return mixed data array on success, a MDB2 error on failure
      * @access public
      */
-    function getTableIndexDefinition($table_name, $index_name)
+    public function getTableIndexDefinition($table_name, $index_name)
     {
         $db = $this->getDBInstance();
         if (MDB2::isError($db)) {
@@ -310,7 +310,7 @@ class MDB2_Driver_Reverse_mysqli extends MDB2_Driver_Reverse_Common
      * @return mixed data array on success, a MDB2 error on failure
      * @access public
      */
-    function getTableConstraintDefinition($table_name, $constraint_name)
+    public function getTableConstraintDefinition($table_name, $constraint_name)
     {
         $db = $this->getDBInstance();
         if (MDB2::isError($db)) {
@@ -366,7 +366,7 @@ class MDB2_Driver_Reverse_mysqli extends MDB2_Driver_Reverse_Common
             if ($constraint_name == $key_name) {
                 if ($row['non_unique']) {
                     //FOREIGN KEY?
-                    return $this->_getTableFKConstraintDefinition($table, $constraint_name_original, $definition);
+                    return $this->getTableFKConstraintDefinition($table, $constraint_name_original, $definition);
                 }
                 if ($row['key_name'] == 'PRIMARY') {
                     $definition['primary'] = true;
@@ -392,13 +392,13 @@ class MDB2_Driver_Reverse_mysqli extends MDB2_Driver_Reverse_Common
         }
         $result->free();
         if (empty($definition['fields'])) {
-            return $this->_getTableFKConstraintDefinition($table, $constraint_name_original, $definition);
+            return $this->getTableFKConstraintDefinition($table, $constraint_name_original, $definition);
         }
         return $definition;
     }
 
     // }}}
-    // {{{ _getTableFKConstraintDefinition()
+    // {{{ getTableFKConstraintDefinition()
 
     /**
      * Get the FK definition from the CREATE TABLE statement
@@ -410,7 +410,7 @@ class MDB2_Driver_Reverse_mysqli extends MDB2_Driver_Reverse_Common
      * @return array|PEAR_Error
      * @access private
      */
-    function _getTableFKConstraintDefinition($table, $constraint_name, $definition)
+    public function getTableFKConstraintDefinition($table, $constraint_name, $definition)
     {
         $db = $this->getDBInstance();
         if (MDB2::isError($db)) {
@@ -484,7 +484,7 @@ class MDB2_Driver_Reverse_mysqli extends MDB2_Driver_Reverse_Common
      * @return mixed data array on success, a MDB2 error on failure
      * @access public
      */
-    function getTriggerDefinition($trigger)
+    public function getTriggerDefinition($trigger)
     {
         $db = $this->getDBInstance();
         if (MDB2::isError($db)) {
@@ -532,7 +532,7 @@ class MDB2_Driver_Reverse_mysqli extends MDB2_Driver_Reverse_Common
      *
      * @see MDB2_Driver_Common::setOption()
      */
-    function tableInfo($result, $mode = null)
+    public function tableInfo($result, $mode = null)
     {
         if (is_string($result)) {
            return parent::tableInfo($result, $mode);
