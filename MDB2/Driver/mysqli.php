@@ -1708,6 +1708,9 @@ class MDB2_Statement_mysqli extends MDB2_Statement_Common
     /**
      * Execute a prepared query statement helper method.
      *
+     * @param array specifies all necessary information
+     *              for bindParam() the array elements must use keys corresponding
+     *              to the number of the position of the parameter.
      * @param mixed $result_class string which specifies which result class to use
      * @param mixed $result_wrap_class string which specifies which class to wrap results in
      *
@@ -1715,10 +1718,10 @@ class MDB2_Statement_mysqli extends MDB2_Statement_Common
      *               a MDB2 error on failure
      * @access private
      */
-    public function execute($result_class = true, $result_wrap_class = true)
+    public function execute($values = null, $result_class = true, $result_wrap_class = true)
     {
         if (null === $this->statement) {
-            $result = parent::execute($result_class, $result_wrap_class);
+            $result = parent::execute($values,$result_class, $result_wrap_class);
             return $result;
         }
         $this->db->last_query = $this->query;
