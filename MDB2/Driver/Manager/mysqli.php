@@ -712,7 +712,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
 
         $result = array();
         foreach ($table_names as $table) {
-            if (!$this->_fixSequenceName($table[0], true)) {
+            if (!$this->fixSequenceName($table[0], true)) {
                 $result[] = $table[0];
             }
         }
@@ -1029,7 +1029,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
         if (MDB2::isError($db)) {
             return $db;
         }
-        
+
         if ($primary || strtolower($name) == 'primary') {
             $query = 'ALTER TABLE '. $db->quoteIdentifier($table, true) .' DROP PRIMARY KEY';
             $result = $db->exec($query);
@@ -1038,7 +1038,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
             }
             return MDB2_OK;
         }
-        
+
         //is it a FK constraint? If so, also delete the associated triggers
         $db->loadModule('Reverse', null, true);
         $definition = $db->reverse->getTableConstraintDefinition($table, $name);
@@ -1189,7 +1189,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
                 $sql_delete .= ' SET FOREIGN_KEY_CHECKS = 1; END;';
 
                 $db->pushErrorHandling(PEAR_ERROR_RETURN);
-                $db->expectError(MDB2_ERROR_CANNOT_CREATE); 
+                $db->expectError(MDB2_ERROR_CANNOT_CREATE);
                 $result = $db->exec($sql_delete);
                 $expected_errmsg = 'This MySQL version doesn\'t support multiple triggers with the same action time and event for one table';
                 $db->popExpect();
@@ -1347,7 +1347,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
 
         $sequence_name = $db->quoteIdentifier($db->getSequenceName($seq_name), true);
         $seqcol_name = $db->quoteIdentifier($db->options['seqcol_name'], true);
-        
+
         $options_strings = array();
 
         if (!empty($options['comment'])) {
@@ -1454,7 +1454,7 @@ class MDB2_Driver_Manager_mysqli extends MDB2_Driver_Manager_Common
 
         $result = array();
         foreach ($table_names as $table_name) {
-            if ($sqn = $this->_fixSequenceName($table_name, true)) {
+            if ($sqn = $this->fixSequenceName($table_name, true)) {
                 $result[] = $sqn;
             }
         }
