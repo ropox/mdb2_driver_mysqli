@@ -1472,15 +1472,17 @@ class MDB2_Result_mysqli extends MDB2_Result_Common
     // {{{ getColumnNames()
 
     /**
-     * Retrieve the names of columns returned by the DBMS in a query result.
+     * Retrieve the names of columns returned by the DBMS in a query result or
+     * from the cache.
      *
+     * @param   bool    If set to true the values are the column names,
+     *                  otherwise the names of the columns are the keys.
      * @return  mixed   Array variable that holds the names of columns as keys
      *                  or an MDB2 error on failure.
      *                  Some DBMS may not return any columns when the result set
      *                  does not contain any rows.
-     * @access private
-     */
-    public function getColumnNames()
+    */
+    public function getColumnNames($flip = false)
     {
         $columns = array();
         $numcols = $this->numCols();
@@ -1494,7 +1496,11 @@ class MDB2_Result_mysqli extends MDB2_Result_Common
         if ($this->db->options['portability'] & MDB2_PORTABILITY_FIX_CASE) {
             $columns = array_change_key_case($columns, $this->db->options['field_case']);
         }
-        return $columns;
+        if ($flip) {
+            return array_flip($columns);
+        } else{
+            return $columns;
+        }
     }
 
     // }}}
