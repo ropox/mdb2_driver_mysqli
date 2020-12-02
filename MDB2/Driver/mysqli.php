@@ -1439,7 +1439,7 @@ class MDB2_Result_mysqli extends MDB2_Result_Common
             }
         }
         if ($mode) {
-            $this->db->_fixResultArrayValues($row, $mode);
+            $this->db->fixResultArrayValues($row, $mode);
         }
         if (   (   $fetchmode != MDB2_FETCHMODE_ASSOC
                 && $fetchmode != MDB2_FETCHMODE_OBJECT)
