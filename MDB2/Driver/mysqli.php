@@ -743,7 +743,7 @@ class MDB2_Driver_mysqli extends MDB2_Driver_Common
 
         $result = $this->doQuery($query, $is_manip, $connection, $this->database_name);
         if (!MDB2::isError($result)) {
-            $result = $this->_affectedRows($connection, $result);
+            $result = $this->affectedRows($connection, $result);
         }
 
         @mysqli_close($connection);
@@ -835,7 +835,7 @@ class MDB2_Driver_mysqli extends MDB2_Driver_Common
     }
 
     // }}}
-    // {{{ _affectedRows()
+    // {{{ affectedRows()
 
     /**
      * Returns the number of rows affected
@@ -845,7 +845,7 @@ class MDB2_Driver_mysqli extends MDB2_Driver_Common
      * @return mixed MDB2 Error Object or the number of rows affected
      * @access private
      */
-    protected function _affectedRows($connection, $result = null)
+    protected function affectedRows($connection, $result = null)
     {
         if (null === $connection) {
             $connection = $this->getConnection();
@@ -1288,7 +1288,7 @@ class MDB2_Driver_mysqli extends MDB2_Driver_Common
         if (MDB2::isError($result)) {
             return $result;
         }
-        return $this->_affectedRows($connection, $result);
+        return $this->affectedRows($connection, $result);
     }
 
     // }}}
@@ -1843,7 +1843,7 @@ class MDB2_Statement_mysqli extends MDB2_Statement_Common
             }
 
             if ($this->is_manip) {
-                $affected_rows = $this->db->_affectedRows($connection, $result);
+                $affected_rows = $this->db->affectedRows($connection, $result);
                 return $affected_rows;
             }
 
